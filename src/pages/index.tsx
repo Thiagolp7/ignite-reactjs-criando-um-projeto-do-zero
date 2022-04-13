@@ -1,12 +1,14 @@
 import { GetStaticProps } from 'next';
 import Link from 'next/link'
-import Header from '../components/Header';
+
 import { getPrismicClient } from '../services/prismic';
+import Prismic from '@prismicio/client'
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
 import { AiOutlineCalendar } from 'react-icons/ai'
 import { BiUser } from 'react-icons/bi'
+import { RichText } from 'prismic-dom';
 
 interface Post {
   uid?: string;
@@ -65,7 +67,34 @@ export default function Home() {
   )
 }
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const prismic = getPrismicClient()
+
+  const response = await prismic.query(
+    [
+      Prismic.predicates.at('document.type', 'posts')
+    ],
+    {
+      fetch: ['posts.title', 'posts.content'],
+      pageSize: 2
+    }
+  )
+
+  console.log(JSON.stringify(response, null, 2))
+
+  const posts = response.results.map(post => {
+    return {
+      uid: post.uid,
+      first_publication_date: post.first_publication_date,
+      data: {
+        title: RichText.asText(post.data.title),
+        subtitle: RichText.asText(post.data.title),
+        author: RichText.asText(post.data.author)
+      }
+    }
+  })
+
+
   return {
     props: {}
   }
