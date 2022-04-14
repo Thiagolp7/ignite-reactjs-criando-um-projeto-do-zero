@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { getPrismicClient } from '../services/prismic';
 import Prismic from '@prismicio/client'
 
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
-import { AiOutlineCalendar } from 'react-icons/ai'
-import { BiUser } from 'react-icons/bi'
+import { FiUser, FiCalendar } from 'react-icons/fi'
 import { RichText } from 'prismic-dom';
+import { useState } from 'react';
 
 interface Post {
   uid?: string;
@@ -29,39 +32,35 @@ interface HomeProps {
   postsPagination: PostPagination;
 }
 
-export default function Home() {
+export default function Home({postsPagination}: HomeProps) {
+  const [posts, setPosts] = useState(postsPagination.results)
+
   return (
     <main className={styles.container}>
-      <Link
-        href="/post/como-utilizar-hooks"
-      >
-        <a className={styles.links}>
-          <h2>Como utilizar hooks</h2>
-          <p>Pensando em sicronização em vez de ciclos de vida.</p>
-          <div>
-            <span>
-              <AiOutlineCalendar/>
-              19 Mar 2021
-            </span>
-            <span>
-              <BiUser/>
-              Joseph Oliveira
-            </span>
-          </div>
-        </a>
-      </Link>
-      <Link href="/">
-        <a>
-          <h2>Como utilizar hooks</h2>
-          <p>Pensando em sicronização em vez de ciclos de vida.</p>
-          <div>
-            <span>
-              <AiOutlineCalendar/>
-              19 Mar 2021
-            </span>
-          </div>
-        </a>
-      </Link>
+      {posts.map(post => {
+        return (
+          <Link
+            href={`/post/${post.uid}`}
+            key={post.uid}
+          >
+            <a className={styles.links}>
+              <h2>{post.data.title}</h2>
+              <p>{post.data.subtitle}</p>
+              <div>
+                <span>
+                  <FiCalendar/>
+                  {post.first_publication_date}
+                </span>
+                <span>
+                  <FiUser/>
+                  {post.data.author}
+                </span>
+              </div>
+            </a>
+          </Link>
+        )
+      })}
+
       <button>Carregar mais posts</button>
     </main>
   )
@@ -75,27 +74,36 @@ export const getStaticProps: GetStaticProps = async () => {
       Prismic.predicates.at('document.type', 'posts')
     ],
     {
-      fetch: ['posts.title', 'posts.content'],
+      fetch: ['posts.title','posts.subtitle', 'posts.author', 'posts.content'],
       pageSize: 2
     }
   )
 
-  console.log(JSON.stringify(response, null, 2))
+  // console.log(JSON.stringify(response, null, 2))
 
   const posts = response.results.map(post => {
+
     return {
       uid: post.uid,
-      first_publication_date: post.first_publication_date,
+      first_publication_date: format(new Date(post.last_publication_date), 'dd MMM yyyy'  ,{
+        locale: ptBR
+      }),
       data: {
-        title: RichText.asText(post.data.title),
-        subtitle: RichText.asText(post.data.title),
-        author: RichText.asText(post.data.author)
+        title: post.data.title,
+        subtitle: post.data.title,
+        author: post.data.author
       }
     }
   })
 
+  console.log(posts)
 
   return {
-    props: {}
+    props: {
+      postsPagination: {
+        results: posts
+      }
+    },
+    revalidate: 300
   }
 };
