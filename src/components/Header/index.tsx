@@ -10,6 +10,7 @@ export default function Header() {
           <a>
             <Image src="/images/Logo.svg" width="238.62px"
               height="25.63px"
+              alt='logo'
             />
           </a>
         </Link>
