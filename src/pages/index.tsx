@@ -35,6 +35,8 @@ interface HomeProps {
 export default function Home({postsPagination}: HomeProps) {
   const [posts, setPosts] = useState(postsPagination.results)
 
+  console.log(posts)
+
   return (
     <main className={styles.container}>
       {posts.map(post => {
@@ -90,7 +92,7 @@ export const getStaticProps: GetStaticProps = async () => {
       }),
       data: {
         title: post.data.title,
-        subtitle: post.data.title,
+        subtitle: post.data.subtitle,
         author: post.data.author
       }
     }
