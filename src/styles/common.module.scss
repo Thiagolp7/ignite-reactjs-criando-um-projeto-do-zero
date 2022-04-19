@@ -1,1 +1,41 @@
-// TODO
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.postInfos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 16.94px;
+  }
+
+
+  @media screen and (max-width: 480px) {
+    gap: 18px;
+
+    span {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 16.94px;
+
+      gap: 6px;
+    }
+
+  }
+
+}

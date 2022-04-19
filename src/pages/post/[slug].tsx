@@ -18,7 +18,9 @@ import { useRouter } from 'next/router';
 interface Post {
   first_publication_date: string | null;
   data: {
+    uid: string;
     title: string;
+    subtitle: string;
     banner: {
       url: string;
     };
@@ -55,27 +57,34 @@ export default function Post({ post, readTime }: PostProps) {
     return `${readTime} min`
   }
 
-
   if(router.isFallback) {
     return (
       <h2>Carregando...</h2>
     )
   }
 
+  console.log(post.data.banner.url)
+
   return (
     <>
       <Head>
         <title>{post.data.title}</title>
+        <meta name="description" content={post.data.title + ' ' + post.data.subtitle} />
       </Head>
       <main className={styles.container}>
-        <div className={styles.banner}>
-          <Image src="/images/banner.png" width="1440px"
-            height="500px"
+        <div className={styles.postBanner}>
+          <Image
+            src={post.data.banner.url}
+            width={1440}
+            height={400}
+            className={styles.postImage}
           />
         </div>
-        <article className={styles.content}>
+        <article className={`${commonStyles.container}
+          ${styles.postContent}
+        `}>
           <h1>{post.data.title}</h1>
-          <div>
+          <div className={commonStyles.postInfos}>
             <span>
             <FiCalendar/>
               { format(new Date(post.first_publication_date), 'dd MMM yyyy'  ,{
@@ -91,16 +100,16 @@ export default function Post({ post, readTime }: PostProps) {
               {getPostReadTime(post)}
             </span>
           </div>
-          <div>
-            {post.data.content.map(content => {
-              return (
-                <div key={content.heading}>
-                  <h2>{content.heading}</h2>
-                  <div dangerouslySetInnerHTML={{__html: RichText.asHtml(content.body)}}/>
-                </div>
-              )
-            })}
-          </div>
+
+          {post.data.content.map(content => {
+            return (
+              <div key={content.heading}>
+                <h2>{content.heading}</h2>
+                <div dangerouslySetInnerHTML={{__html: RichText.asHtml(content.body)}}/>
+              </div>
+            )
+          })}
+
         </article>
       </main>
     </>
@@ -113,7 +122,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     [Prismic.predicates.at('document.type', 'posts')],
     {
       fetch: ['posts.uid'],
-      pageSize: 1
+      pageSize: 2
     }
   );
 
@@ -132,7 +141,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const prismic = getPrismicClient();
   const response = await prismic.getByUID('posts', String(slug), {});
-  console.log(JSON.stringify(response, null, 2))
 
   const post = {
     uid: response.uid,
@@ -150,10 +158,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   }
 
-
   return {
     props: {
       post
-    }
+    },
+    revalidate: 60 // 1 minutes
   }
 };

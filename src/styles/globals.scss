@@ -16,10 +16,21 @@
   --title-color: var(--gray-50);
   --text-color: var(--gray-100);
   --links-color: var(--pink-400);
+  --ul-text-color: var(--gray-400);
   --bg-color: var(--gray-900);
   --link-bg-color: var(--gray-800);
 
   font-family: 'Inter', sans-serif;
+}
+
+html{
+  @media (max-width: 1080px) {
+   font-size : 93.75% ;
+  }
+
+  @media (max-width: 728px) {
+   font-size : 87.5% ;
+  }
 }
 
 body {
@@ -50,7 +61,7 @@ h1 {
 h2 {
   font-weight: 700;
   size: 28px;
-  line-height: 33.89px;
+  line-height: 34px;
 }
 
 p,
