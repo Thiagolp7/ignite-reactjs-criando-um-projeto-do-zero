@@ -69,7 +69,7 @@ export default function Post({ post, readTime }: PostProps) {
     <>
       <Head>
         <title>{post.data.title}</title>
-        <meta name="description" content={post.data.title + ' ' + post.data.subtitle} />
+        <meta name="description" content={post.data.title + ' - ' + post.data.subtitle} />
       </Head>
       <main className={styles.container}>
         <div className={styles.postBanner}>
