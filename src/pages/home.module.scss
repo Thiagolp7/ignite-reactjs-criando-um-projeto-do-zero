@@ -1,6 +1,5 @@
 .postLinks {
-  padding: 0 1rem;
-  padding-top: 25px;
+  padding: 25px 1rem 50px;
   display: flex;
   flex-direction: column;
 
@@ -9,9 +8,10 @@
     border-radius: 10px;
     transition: 0.5s ease;
     overflow: hidden;
+    // background-color: red;
 
     & + a {
-      margin-top: 48px;
+      margin-top: 38px;
     }
 
     &:hover {
@@ -19,11 +19,14 @@
       background-color: var(--link-bg-color);
     }
 
-    p {
+    .postSubtitle {
       margin-top: 8px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       margin-bottom: 25px;
+
+      color: var(--text-color);
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
     }
 
   }
@@ -52,53 +55,27 @@
   }
 
   @media screen and (max-width: 480px) {
-    margin-top: 0;
-
+    padding-top: 0;
     a {
-
       h2 {
-        font-size: 24px;
+        font-size: 20px;
+        line-height: 28px;
       }
 
       & + a {
-        margin-top: 48px;
+        margin-top: 28px;
       }
 
-      &:hover {
-        filter: brightness(0.9);
-        background-color: var(--link-bg-color);
-      }
-
-      p {
-        margin-top: 8px;
+      .postSubtitle {
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
       }
-
     }
 
     button {
-      color: var(--links-color);
-      background-color: transparent;
-      border: 0;
-      border-radius: 5px;
-      cursor: pointer;
-
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 21.78px;
-
-      margin-top: 59px;
-      padding: 5px 10px;
-      align-self: flex-start;
-
-      transition: 0.5s ease;
-
-      &:hover {
-        filter: brightness(0.9);
-        background-color: var(--link-bg-color);
-      }
+      font-size: 16px;
+      margin-top: 49px;
     }
   }
 }

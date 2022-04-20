@@ -86,7 +86,9 @@ export default function Home({postsPagination}: HomeProps) {
             >
               <a className={styles.links}>
                 <h2>{post.data.title}</h2>
-                <p>{post.data.subtitle}</p>
+                <div className={styles.postSubtitle}>
+                  {post.data.subtitle}
+                </div>
                 <div className={commonStyles.postInfos}>
                   <span>
                     <FiCalendar/>
@@ -106,7 +108,7 @@ export default function Home({postsPagination}: HomeProps) {
 
         { nextPageUrl &&
           <button onClick={() => {handleNextPage()}} >
-            Carregar mais posts
+            Carregar mais posts...
           </button> }
       </main>
     </>
