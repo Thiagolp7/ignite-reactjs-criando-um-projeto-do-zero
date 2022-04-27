@@ -4,8 +4,12 @@
 > No desafio foi proposto uma aplicação de blog que consome os posts do Prismic CMS.
 
 
+https://user-images.githubusercontent.com/92824127/165597078-3cfb698a-2903-4c14-9eff-d0ec109fa3ed.mp4
 
+
+> 🔗 Deploy: https://ignite-reactjs-criando-um-projeto-do-zero.vercel.app/
 ---
+
 ## 📌 Implementação
 
 - [x] Layout responsivo
@@ -13,6 +17,7 @@
 - [x] Geração das páginas dos post estaticamente usando o getStaticProps do NextJS.
 - [x] Geração estática de alguns posts em tempo de build utilizando getStaticPaths.
 - [x] Fetch de novos posts ao clicar no "Carregar mais..." utilizando a páginação do Prismic.
+- [x] Função de calculo de tempo de leitura. 
 
 
 ---
@@ -32,7 +37,7 @@ git clone git@github.com:Thiagolp7/ignite-reactjs-criando-um-projeto-do-zero.git
 
 2. Entre na pasta, instale as depêndencias e rode o projeto com:
 ```bash
-cd ignite-dtmoney && npm install && npm run dev
+cd ignite-reactjs-criando-um-projeto-do-zero && npm install && npm run dev
 ```
 
 3. Acesse no seu navegador 
@@ -46,7 +51,7 @@ http://localhost:3000/
 
 <div align="right"> 
   
-  ![languages](https://img.shields.io/github/languages/count/thiagolp7/ignite-dtmoney) 
+  ![languages](https://img.shields.io/github/languages/count/thiagolp7/ignite-reactjs-criando-um-projeto-do-zero) 
 
 </div>
 
