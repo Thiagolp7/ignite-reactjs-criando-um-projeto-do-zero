@@ -59,7 +59,7 @@ http://localhost:3000/
 - <a href="https://www.typescriptlang.org/"> Typescript </a>
 - <a href="https://sass-lang.com/"> Sass </a>
 - <a href="https://prismic.io/"> Prismic CMS </a>
-- <a href="https://axios-http.com/"> Axios </a>
+
 
 
 
